@@ -11,7 +11,9 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "security-check": "node scripts/security-check.mjs",
+    "validate-bindings": "node scripts/validate-bindings.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
