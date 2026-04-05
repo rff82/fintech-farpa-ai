@@ -67,7 +67,7 @@ export const adminRouter = router({
 
   getUploadUrl: publicProcedure
     .input(z.object({ filename: z.string(), contentType: z.string() }))
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       // Nota: Cloudflare R2 não tem presigned URLs nativos via binding direto no Worker sem S3 API
       // Mas podemos retornar um endpoint que o Worker processa o PUT
       return { 
