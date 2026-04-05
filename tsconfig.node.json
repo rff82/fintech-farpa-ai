@@ -17,5 +17,5 @@
     "noUncheckedSideEffectImports": true,
     "types": ["node"]
   },
-  "include": ["vite.config.ts", "drizzle.config.ts"]
+  "include": ["vite.config.ts"]
 }
