@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { to: '/genes', label: 'Genes' },
   { to: '/clinical-trials', label: 'Ensaios' },
   { to: '/analytics', label: 'Analytics' },
+  { to: '/admin', label: 'Admin' },
 ]
 
 export default function Header() {

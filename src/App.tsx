@@ -7,6 +7,7 @@ import Search from './pages/Search'
 import Genes from './pages/Genes'
 import ClinicalTrials from './pages/ClinicalTrials'
 import Analytics from './pages/Analytics'
+import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/genes" element={<Genes />} />
         <Route path="/clinical-trials" element={<ClinicalTrials />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
