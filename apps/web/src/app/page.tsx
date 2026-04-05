@@ -1,10 +1,9 @@
-import { APP_NAME } from "@health/shared";
+import { ClinicalDashboard } from "@/components/ClinicalDashboard";
 
 export default function Home() {
   return (
-    <main>
-      <h1>{APP_NAME}</h1>
-      <p>HealthTech platform — coming soon.</p>
+    <main id="main-content" tabIndex={-1}>
+      <ClinicalDashboard />
     </main>
   );
 }

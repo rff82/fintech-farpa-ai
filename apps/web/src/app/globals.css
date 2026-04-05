@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Design Tokens ──────────────────────────────────────────────────────── */
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1a1a2e;
+  --color-primary: #2563eb;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-muted: #64748b;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --ring-width: 2px;
+}
+
+/* ─── High Contrast Mode (WCAG 2.2 AAA) ─────────────────────────────────────── */
+[data-theme="high-contrast"] {
+  --color-bg: #000000;
+  --color-text: #ffff00;
+  --color-primary: #ffff00;
+  --color-surface: #111111;
+  --color-border: #ffff00;
+  --color-muted: #cccc00;
+  --color-success: #00ff00;
+  --color-warning: #ff8800;
+  --color-danger: #ff4444;
+  --ring-width: 4px;
+}
+
+[data-theme="high-contrast"] * {
+  outline: 2px solid transparent;
+}
+
+[data-theme="high-contrast"] *:focus-visible {
+  outline: var(--ring-width) solid var(--color-primary) !important;
+  outline-offset: 2px;
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────────────── */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* ─── Skip Link ──────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom-right-radius: 0.5rem;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Focus visible global ───────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: var(--ring-width) solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
