@@ -1,8 +1,5 @@
 import { z } from 'zod'
-import { drizzle } from 'drizzle-orm/d1'
-import { like, desc } from 'drizzle-orm'
 import { router, publicProcedure } from '../_core/trpc'
-import { articles } from '../../../drizzle/schema'
 import { searchPubMed } from '../external-apis/pubmed'
 
 export const searchRouter = router({
@@ -19,21 +16,20 @@ export const searchRouter = router({
       }),
     )
     .query(async ({ input, ctx }) => {
-      const db = drizzle(ctx.env.DB)
       const offset = (input.page - 1) * input.limit
+      
+      // Consulta nativa ao Cloudflare D1
+      const { results } = await ctx.env.DB.prepare(
+        'SELECT * FROM articles WHERE title LIKE ? ORDER BY year DESC LIMIT ? OFFSET ?'
+      )
+      .bind(`%${input.query}%`, input.limit, offset)
+      .all()
 
-      const dbResults = await db
-        .select()
-        .from(articles)
-        .where(like(articles.title, `%${input.query}%`))
-        .orderBy(desc(articles.year))
-        .limit(input.limit)
-        .offset(offset)
-
-      if (dbResults.length > 0) {
-        return { results: dbResults, source: 'db' as const, total: dbResults.length }
+      if (results && results.length > 0) {
+        return { results, source: 'db' as const, total: results.length }
       }
 
+      // Fallback para PubMed se não houver resultados no banco
       const pubmedResults = await searchPubMed(input.query, ctx.env.KV)
       return { results: pubmedResults, source: 'pubmed' as const, total: pubmedResults.length }
     }),
@@ -41,11 +37,12 @@ export const searchRouter = router({
   autocomplete: publicProcedure
     .input(z.object({ query: z.string().min(2) }))
     .query(async ({ input, ctx }) => {
-      const db = drizzle(ctx.env.DB)
-      return db
-        .select({ title: articles.title, pmid: articles.pmid })
-        .from(articles)
-        .where(like(articles.title, `%${input.query}%`))
-        .limit(5)
+      const { results } = await ctx.env.DB.prepare(
+        'SELECT title, pmid FROM articles WHERE title LIKE ? LIMIT 5'
+      )
+      .bind(`%${input.query}%`)
+      .all()
+      
+      return results || []
     }),
 })

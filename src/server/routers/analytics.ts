@@ -1,29 +1,26 @@
-import { drizzle } from 'drizzle-orm/d1'
-import { sql, desc } from 'drizzle-orm'
 import { router, publicProcedure } from '../_core/trpc'
-import { articles, genes } from '../../../drizzle/schema'
 
 export const analyticsRouter = router({
-  publicationsByYear: publicProcedure.query(async ({ ctx }) => {
-    const db = drizzle(ctx.env.DB)
-    return db
-      .select({
-        year: articles.year,
-        count: sql<number>`count(*)`.as('count'),
-      })
-      .from(articles)
-      .groupBy(articles.year)
-      .orderBy(articles.year)
+  getOverview: publicProcedure.query(async ({ ctx }) => {
+    const articlesCount = await ctx.env.DB.prepare('SELECT COUNT(*) as count FROM articles').first('count')
+    const genesCount = await ctx.env.DB.prepare('SELECT COUNT(*) as count FROM genes').first('count')
+    
+    const recentArticles = await ctx.env.DB.prepare(
+      'SELECT * FROM articles ORDER BY created_at DESC LIMIT 5'
+    ).all()
+
+    return {
+      totalArticles: articlesCount || 0,
+      totalGenes: genesCount || 0,
+      recentArticles: recentArticles.results || [],
+    }
   }),
 
-  topGenes: publicProcedure.query(async ({ ctx }) => {
-    const db = drizzle(ctx.env.DB)
-    return db.select().from(genes).orderBy(desc(genes.articleCount)).limit(10)
-  }),
-
-  syncStatus: publicProcedure.query(async ({ ctx }) => {
-    const lastSync = await ctx.env.KV.get('sync:last_run')
-    const totalArticles = await ctx.env.KV.get('sync:total_articles')
-    return { lastSync, totalArticles: totalArticles ? Number(totalArticles) : 0 }
+  getTopGenes: publicProcedure.query(async ({ ctx }) => {
+    const { results } = await ctx.env.DB.prepare(
+      'SELECT symbol, article_count FROM genes ORDER BY article_count DESC LIMIT 10'
+    ).all()
+    
+    return results || []
   }),
 })

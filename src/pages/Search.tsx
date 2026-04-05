@@ -31,14 +31,13 @@ export default function Search() {
     setPage(1)
   }
 
-  const results = data?.results ?? []
+  const results = (data?.results ?? []) as any[]
   const source = data?.source
 
   return (
     <div className="search-page">
       <div className="container">
         <h2>🔍 Busca Avançada</h2>
-
         <SearchBar onSearch={handleSearch} loading={isFetching} defaultValue={query} />
         <FilterPanel filters={filters} onChange={handleFilters} />
 
@@ -71,7 +70,7 @@ export default function Search() {
             )}
 
             <div className="results-grid" aria-live="polite" aria-label="Resultados da busca">
-              {results.map(article => (
+              {results.map((article: any) => (
                 <ArticleCard key={article.pmid ?? article.title} article={article} />
               ))}
             </div>
