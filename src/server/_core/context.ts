@@ -3,6 +3,7 @@ export interface CloudflareEnv {
   KV: KVNamespace
   STORAGE: R2Bucket
   AI: any // Cloudflare Workers AI binding
+  VECTOR_INDEX: VectorizeIndex
 }
 
 export interface CreateContext {

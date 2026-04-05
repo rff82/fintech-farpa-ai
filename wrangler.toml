@@ -22,5 +22,9 @@ id = "7cf91161a0a14cfeb1b9f372221bce5b"
 [ai]
 binding = "AI"
 
+[[vectorize]]
+binding = "VECTOR_INDEX"
+index_name = "health-index"
+
 [triggers]
-crons = ["0 6 * * 0"]
+crons = ["0 6 * * *"]

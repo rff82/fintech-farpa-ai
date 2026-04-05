@@ -54,6 +54,7 @@ export default function Search() {
                 {results.length} resultado(s)
                 {source === 'pubmed' && ' — via PubMed API'}
                 {source === 'db' && ' — via banco de dados local'}
+                {source === 'vectorize' && ' — via busca vetorial (IA)'}
               </p>
             )}
 

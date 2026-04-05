@@ -4,6 +4,13 @@ import type { CloudflareEnv } from '../src/server/_core/context'
 
 const SYNC_QUERY = 'CDHR1 OR "retinal dystrophy"'
 
+async function generateEmbedding(env: CloudflareEnv, text: string): Promise<number[]> {
+  const response = await env.AI.run('@cf/baai/bge-base-en-v1.5', {
+    text: [text]
+  })
+  return response.data[0]
+}
+
 async function runSync(env: CloudflareEnv): Promise<{ articles: number; trials: number }> {
   let articleCount = 0
   let trialCount = 0
@@ -12,11 +19,10 @@ async function runSync(env: CloudflareEnv): Promise<{ articles: number; trials: 
   const pubmedArticles = await searchPubMed(SYNC_QUERY, env.KV)
   for (const article of pubmedArticles) {
     try {
-      // Usando D1 nativo para inserção com ON CONFLICT (SQLite nativo)
       const result = await env.DB.prepare(
-        \`INSERT OR IGNORE INTO articles (
+        `INSERT OR IGNORE INTO articles (
           pmid, title, abstract, authors, journal, year, doi, url, source_database
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)\`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .bind(
         article.pmid,
@@ -34,18 +40,29 @@ async function runSync(env: CloudflareEnv): Promise<{ articles: number; trials: 
       if (result.meta.changes > 0) {
         articleCount++
         
-        // INTEGRAÇÃO NATIVA: Cloudflare Workers AI para gerar resumo acessível
-        // Se o Workers AI estiver disponível no env (precisa de binding AI)
-        if ((env as any).AI) {
+        // 1. Gerar Resumo com IA
+        if (env.AI) {
           try {
-            const aiResponse = await (env as any).AI.run('@cf/meta/llama-3-8b-instruct', {
-              prompt: \`Resuma este título científico de forma simples e acessível para pacientes: \${article.title}\`
+            const aiResponse = await env.AI.run('@cf/meta/llama-3-8b-instruct', {
+              prompt: `Resuma este título científico de forma simples e acessível para pacientes: ${article.title}`
             })
             if (aiResponse?.response) {
-              await env.KV.put(\`ai:summary:\${article.pmid}\`, aiResponse.response)
+              await env.KV.put(`ai:summary:${article.pmid}`, aiResponse.response)
             }
           } catch (aiErr) {
-            console.error('Erro no Workers AI:', aiErr)
+            console.error('Erro no Workers AI (Summary):', aiErr)
+          }
+
+          // 2. Gerar Embedding e Salvar no Vectorize
+          try {
+            const embedding = await generateEmbedding(env, `${article.title} ${article.abstract || ''}`)
+            await env.VECTOR_INDEX.upsert([{
+              id: article.pmid,
+              values: embedding,
+              metadata: { title: article.title, type: 'article' }
+            }])
+          } catch (vecErr) {
+            console.error('Erro no Vectorize:', vecErr)
           }
         }
       }
@@ -59,9 +76,9 @@ async function runSync(env: CloudflareEnv): Promise<{ articles: number; trials: 
   for (const trial of trials) {
     try {
       const result = await env.DB.prepare(
-        \`INSERT OR IGNORE INTO clinical_trials (
+        `INSERT OR IGNORE INTO clinical_trials (
           nct_id, title, status, phase, sponsor_name, locations, start_date, url
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)\`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .bind(
         trial.nctId,
@@ -75,20 +92,33 @@ async function runSync(env: CloudflareEnv): Promise<{ articles: number; trials: 
       )
       .run()
 
-      if (result.meta.changes > 0) trialCount++
+      if (result.meta.changes > 0) {
+        trialCount++
+        
+        // Gerar Embedding para Trials
+        if (env.AI) {
+          try {
+            const embedding = await generateEmbedding(env, trial.title)
+            await env.VECTOR_INDEX.upsert([{
+              id: trial.nctId,
+              values: embedding,
+              metadata: { title: trial.title, type: 'trial' }
+            }])
+          } catch (vecErr) {
+            console.error('Erro no Vectorize (Trial):', vecErr)
+          }
+        }
+      }
     } catch (err) {
       console.error('Erro ao inserir trial:', err)
     }
   }
 
-  // ── Metadata ─────────────────────────────────
   await env.KV.put('sync:last_run', new Date().toISOString())
-  await env.KV.put('sync:total_articles', String(articleCount))
   
   return { articles: articleCount, trials: trialCount }
 }
 
-// Triggered by cron schedule
 export const onScheduled: ExportedHandlerScheduledHandler<CloudflareEnv> = async (
   _event,
   env,
@@ -96,7 +126,6 @@ export const onScheduled: ExportedHandlerScheduledHandler<CloudflareEnv> = async
   await runSync(env)
 }
 
-// Manual trigger via GET /sync (development/testing)
 export const onRequestGet: PagesFunction<CloudflareEnv> = async ctx => {
   const stats = await runSync(ctx.env)
   return Response.json({ ok: true, ...stats })
