@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# build outputs
+dist/
+build/
+.next/
+.turbo/
+
+# cloudflare
+.wrangler/
+.dev.vars
+
+# logs
+logs/
+*.log
+npm-debug.log*
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/settings.json
+.idea/

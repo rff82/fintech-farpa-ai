@@ -1,0 +1,26 @@
+{
+  "name": "@health/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "preview": "npx wrangler pages dev .next",
+    "deploy": "npx wrangler pages deploy .next"
+  },
+  "dependencies": {
+    "@health/shared": "*",
+    "next": "^15.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250327.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "wrangler": "^3.114.0"
+  }
+}

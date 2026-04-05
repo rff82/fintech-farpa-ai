@@ -1,0 +1,14 @@
+name = "health-local-etl"
+compatibility_date = "2025-04-01"
+
+# Local-only — used for `wrangler d1 execute` and `wrangler r2 object put`
+# This worker is never deployed; wrangler.toml provides binding config for local commands.
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "health-db"
+# database_id = ""
+
+# [[r2_buckets]]
+# binding = "ASSETS"
+# bucket_name = "health-assets"

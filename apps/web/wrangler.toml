@@ -1,0 +1,23 @@
+name = "health-web"
+compatibility_date = "2025-04-01"
+
+# Pages project — these bindings are available in server-side code
+# Activate when switching from static export to @opennextjs/cloudflare
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "health-db"
+# database_id = ""           # fill after `wrangler d1 create health-db`
+
+# [[vectorize]]
+# binding = "VECTOR_STORE"
+# index_name = "health-vector-store"
+
+# [[r2_buckets]]
+# binding = "ASSETS"
+# bucket_name = "health-assets"
+
+# [[kv_namespaces]]
+# binding = "KV"
+# kv_namespace_name = "health-kv-store"
+# id = ""                    # fill after `wrangler kv namespace create health-kv-store`
