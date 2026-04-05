@@ -4,11 +4,11 @@ compatibility_date = "2025-04-01"
 # Local-only — used for `wrangler d1 execute` and `wrangler r2 object put`
 # This worker is never deployed; wrangler.toml provides binding config for local commands.
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "health-db"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "health-db"
+database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
 
 # [[r2_buckets]]
 # binding = "ASSETS"
-# bucket_name = "health-assets"
+# bucket_name = "health-assets"   # enable R2 in Cloudflare Dashboard first

@@ -4,10 +4,10 @@ compatibility_date = "2025-04-01"
 # Pages project — these bindings are available in server-side code
 # Activate when switching from static export to @opennextjs/cloudflare
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "health-db"
-# database_id = ""           # fill after `wrangler d1 create health-db`
+[[d1_databases]]
+binding = "DB"
+database_name = "health-db"
+database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
 
 # [[vectorize]]
 # binding = "VECTOR_STORE"
@@ -15,9 +15,8 @@ compatibility_date = "2025-04-01"
 
 # [[r2_buckets]]
 # binding = "ASSETS"
-# bucket_name = "health-assets"
+# bucket_name = "health-assets"   # enable R2 in Cloudflare Dashboard first
 
-# [[kv_namespaces]]
-# binding = "KV"
-# kv_namespace_name = "health-kv-store"
-# id = ""                    # fill after `wrangler kv namespace create health-kv-store`
+[[kv_namespaces]]
+binding = "KV"
+id = "7cf91161a0a14cfeb1b9f372221bce5b"
