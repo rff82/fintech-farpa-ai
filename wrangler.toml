@@ -1,0 +1,23 @@
+name = "health-farpa-ai"
+compatibility_date = "2026-04-05"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+[build]
+command = "npm run build"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "health-db"
+database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "health-assets"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "7cf91161a0a14cfeb1b9f372221bce5b"
+
+[triggers]
+crons = ["0 6 * * 0"]

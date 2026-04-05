@@ -1,12 +1,39 @@
 {
   "name": "health-farpa-ai",
-  "version": "0.1.0",
-  "description": "HealthTech CDHR1 - Plataforma de Ciência Aberta em Distrofias Retinianas",
-  "main": "index.html",
+  "version": "0.2.0",
+  "description": "HealthTech CDHR1 - Plataforma de Pesquisa em Distrofias Retinianas",
+  "type": "module",
   "scripts": {
-    "dev": "python3 -m http.server 3000",
-    "build": "echo 'Static site - no build needed'",
-    "deploy": "wrangler pages deploy ."
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "pages:dev": "wrangler pages dev dist --d1=DB --kv=KV",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 execute health-db --file=drizzle/migrations/0000_initial.sql --remote",
+    "db:migrate:local": "wrangler d1 execute health-db --file=drizzle/migrations/0000_initial.sql --local"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.69.0",
+    "@trpc/client": "^11.1.0",
+    "@trpc/react-query": "^11.1.0",
+    "@trpc/server": "^11.1.0",
+    "@trpc/tanstack-react-query": "^11.1.0",
+    "drizzle-orm": "^0.41.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.5.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250405.0",
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "drizzle-kit": "^0.30.6",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.1",
+    "wrangler": "^3.112.0"
   },
   "keywords": [
     "health",
@@ -16,8 +43,5 @@
     "wcag"
   ],
   "author": "HealthTech Team",
-  "license": "MIT",
-  "devDependencies": {
-    "wrangler": "^3.0.0"
-  }
+  "license": "MIT"
 }
