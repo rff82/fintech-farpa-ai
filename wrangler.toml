@@ -19,5 +19,8 @@ bucket_name = "health-assets"
 binding = "KV"
 id = "7cf91161a0a14cfeb1b9f372221bce5b"
 
+[ai]
+binding = "AI"
+
 [triggers]
 crons = ["0 6 * * 0"]

@@ -25,13 +25,29 @@ export const searchRouter = router({
       .bind(`%${input.query}%`, input.limit, offset)
       .all()
 
-      if (results && results.length > 0) {
-        return { results, source: 'db' as const, total: results.length }
+      let finalResults: any[] = results || []
+
+      if (finalResults.length === 0) {
+        // Fallback para PubMed se não houver resultados no banco
+        finalResults = await searchPubMed(input.query, ctx.env.KV)
       }
 
-      // Fallback para PubMed se não houver resultados no banco
-      const pubmedResults = await searchPubMed(input.query, ctx.env.KV)
-      return { results: pubmedResults, source: 'pubmed' as const, total: pubmedResults.length }
+      // INTEGRAÇÃO NATIVA: Tentar buscar resumos da IA no KV para cada resultado
+      const resultsWithAI = await Promise.all(
+        finalResults.map(async (article: any) => {
+          const aiSummary = await ctx.env.KV.get(`ai:summary:${article.pmid}`)
+          return {
+            ...article,
+            aiSummary: aiSummary || null
+          }
+        })
+      )
+
+      return { 
+        results: resultsWithAI, 
+        source: results && results.length > 0 ? 'db' : 'pubmed', 
+        total: resultsWithAI.length 
+      }
     }),
 
   autocomplete: publicProcedure

@@ -353,3 +353,25 @@ body.high-contrast :focus-visible {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Estilos para Integração Nativa Cloudflare Workers AI */
+.ai-summary-box {
+  background: rgba(243, 180, 0, 0.1);
+  border-left: 4px solid #f3b400;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.9rem;
+}
+
+.ai-summary-box strong {
+  color: #d97706;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.ai-summary-box p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.5;
+}

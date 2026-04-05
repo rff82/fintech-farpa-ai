@@ -1,66 +1,90 @@
-/**
- * Cloudflare Pages Scheduled Function — sincronização semanal
- * Ativado pelo cron definido em wrangler.toml: "0 6 * * 0" (todo domingo às 06:00 UTC)
- *
- * Para disparar manualmente em desenvolvimento:
- *   GET /sync  →  apenas para fins de teste
- */
-import { drizzle } from 'drizzle-orm/d1'
 import { searchPubMed } from '../src/server/external-apis/pubmed'
 import { searchClinicalTrials } from '../src/server/external-apis/clinical-trials'
-import { articles, clinicalTrials } from '../src/drizzle/schema'
 import type { CloudflareEnv } from '../src/server/_core/context'
 
 const SYNC_QUERY = 'CDHR1 OR "retinal dystrophy"'
 
 async function runSync(env: CloudflareEnv): Promise<{ articles: number; trials: number }> {
-  const db = drizzle(env.DB)
   let articleCount = 0
   let trialCount = 0
 
   // ── PubMed ──────────────────────────────────
   const pubmedArticles = await searchPubMed(SYNC_QUERY, env.KV)
   for (const article of pubmedArticles) {
-    const result = await db
-      .insert(articles)
-      .values({
-        pmid: article.pmid,
-        title: article.title,
-        abstract: article.abstract,
-        authors: JSON.stringify(article.authors),
-        journal: article.journal,
-        year: article.year,
-        doi: article.doi,
-        url: article.url,
-        sourceDatabase: 'pubmed',
-      })
-      .onConflictDoNothing()
-    if ((result as { rowsAffected?: number }).rowsAffected) articleCount++
+    try {
+      // Usando D1 nativo para inserção com ON CONFLICT (SQLite nativo)
+      const result = await env.DB.prepare(
+        \`INSERT OR IGNORE INTO articles (
+          pmid, title, abstract, authors, journal, year, doi, url, source_database
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)\`
+      )
+      .bind(
+        article.pmid,
+        article.title,
+        article.abstract || '',
+        JSON.stringify(article.authors),
+        article.journal,
+        article.year,
+        article.doi || null,
+        article.url,
+        'pubmed'
+      )
+      .run()
+
+      if (result.meta.changes > 0) {
+        articleCount++
+        
+        // INTEGRAÇÃO NATIVA: Cloudflare Workers AI para gerar resumo acessível
+        // Se o Workers AI estiver disponível no env (precisa de binding AI)
+        if ((env as any).AI) {
+          try {
+            const aiResponse = await (env as any).AI.run('@cf/meta/llama-3-8b-instruct', {
+              prompt: \`Resuma este título científico de forma simples e acessível para pacientes: \${article.title}\`
+            })
+            if (aiResponse?.response) {
+              await env.KV.put(\`ai:summary:\${article.pmid}\`, aiResponse.response)
+            }
+          } catch (aiErr) {
+            console.error('Erro no Workers AI:', aiErr)
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Erro ao inserir artigo:', err)
+    }
   }
 
   // ── ClinicalTrials ───────────────────────────
   const trials = await searchClinicalTrials(SYNC_QUERY, env.KV)
   for (const trial of trials) {
-    const result = await db
-      .insert(clinicalTrials)
-      .values({
-        nctId: trial.nctId,
-        title: trial.title,
-        status: trial.status,
-        phase: trial.phase,
-        sponsorName: trial.sponsor,
-        locations: JSON.stringify(trial.locations),
-        startDate: trial.startDate,
-        url: trial.url,
-      })
-      .onConflictDoNothing()
-    if ((result as { rowsAffected?: number }).rowsAffected) trialCount++
+    try {
+      const result = await env.DB.prepare(
+        \`INSERT OR IGNORE INTO clinical_trials (
+          nct_id, title, status, phase, sponsor_name, locations, start_date, url
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)\`
+      )
+      .bind(
+        trial.nctId,
+        trial.title,
+        trial.status,
+        trial.phase,
+        trial.sponsor,
+        JSON.stringify(trial.locations),
+        trial.startDate,
+        trial.url
+      )
+      .run()
+
+      if (result.meta.changes > 0) trialCount++
+    } catch (err) {
+      console.error('Erro ao inserir trial:', err)
+    }
   }
 
   // ── Metadata ─────────────────────────────────
   await env.KV.put('sync:last_run', new Date().toISOString())
   await env.KV.put('sync:total_articles', String(articleCount))
-
+  
   return { articles: articleCount, trials: trialCount }
 }
 

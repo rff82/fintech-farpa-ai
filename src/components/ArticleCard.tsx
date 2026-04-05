@@ -1,13 +1,14 @@
 interface Article {
   pmid?: string | null
   title: string
-  authors?: string | string[] | null  // DB: JSON string | PubMed: string[]
+  authors?: string | string[] | null
   journal?: string | null
   year?: number | null
   doi?: string | null
   url?: string | null
   abstract?: string | null
   sourceDatabase?: string | null
+  aiSummary?: string | null
 }
 
 interface Props {
@@ -20,6 +21,7 @@ export default function ArticleCard({ article }: Props) {
     : Array.isArray(article.authors)
       ? article.authors
       : (JSON.parse(article.authors) as string[])
+
   const authors = authorsList.slice(0, 3).join(', ')
   const hasMore = authorsList.length > 3
 
@@ -58,8 +60,15 @@ export default function ArticleCard({ article }: Props) {
         )}
       </div>
 
-      {article.abstract && (
-        <p className="article-abstract">{article.abstract}</p>
+      {article.aiSummary ? (
+        <div className="ai-summary-box">
+          <strong>✨ Resumo Acessível (IA):</strong>
+          <p>{article.aiSummary}</p>
+        </div>
+      ) : (
+        article.abstract && (
+          <p className="article-abstract">{article.abstract}</p>
+        )
       )}
 
       <div style={{ marginTop: '0.75rem' }}>
