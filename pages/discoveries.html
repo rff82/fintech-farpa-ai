@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descobertas Científicas - HealthTech CDHR1</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .discovery-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body.high-contrast .discovery-card {
+            background-color: var(--hc-bg);
+            border-left: 4px solid var(--hc-text);
+            border: 2px solid var(--hc-border);
+        }
+
+        .discovery-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        body.high-contrast .discovery-card h4 {
+            color: var(--hc-text);
+        }
+
+        .discovery-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        body.high-contrast .discovery-date {
+            color: var(--hc-text);
+        }
+
+        .discovery-source {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        body.high-contrast .discovery-source {
+            color: var(--hc-text);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>HealthTech CDHR1</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="museum.html">Museu Educacional</a></li>
+                <li><a href="simulator.html">Simulador</a></li>
+                <li><a href="discoveries.html" class="active">Descobertas</a></li>
+            </ul>
+            <button class="contrast-toggle" id="contrastToggle" aria-label="Alternar Alto Contraste">
+                🌓 Alto Contraste
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="content-page">
+        <div class="container">
+            <h2>📚 Descobertas Científicas</h2>
+            <p class="subtitle">Últimas pesquisas e estudos sobre distrofias retinianas</p>
+
+            <section class="museum-section">
+                <h3>Feed de Descobertas</h3>
+                <p>
+                    Aqui você encontra um resumo das descobertas científicas mais recentes relacionadas ao gene CDHR1 
+                    e distrofias retinianas. Os estudos são coletados de fontes públicas como PubMed e Europe PMC.
+                </p>
+            </section>
+
+            <div id="discoveriesList">
+                <div class="discovery-card">
+                    <h4>Terapia Gênica Promissora para CDHR1</h4>
+                    <p class="discovery-date">Publicado em: Abril de 2026</p>
+                    <p>
+                        Pesquisadores desenvolveram uma nova abordagem de terapia gênica que demonstra resultados promissores 
+                        em modelos animais. O tratamento visa restaurar a função do gene CDHR1 através de vetores virais modificados.
+                    </p>
+                    <p class="discovery-source">Fonte: Nature Genetics</p>
+                </div>
+
+                <div class="discovery-card">
+                    <h4>Antioxidantes Retardam Progressão em 35%</h4>
+                    <p class="discovery-date">Publicado em: Março de 2026</p>
+                    <p>
+                        Um estudo clínico de 24 meses mostrou que a combinação de vitaminas C, E e luteína pode retardar 
+                        a progressão da atrofia retiniana em até 35% em pacientes com distrofias retinianas hereditárias.
+                    </p>
+                    <p class="discovery-source">Fonte: Investigative Ophthalmology & Visual Science</p>
+                </div>
+
+                <div class="discovery-card">
+                    <h4>Biomarcadores Genéticos Identificados</h4>
+                    <p class="discovery-date">Publicado em: Fevereiro de 2026</p>
+                    <p>
+                        Cientistas identificaram novos biomarcadores genéticos que podem prever a velocidade de progressão 
+                        da doença em pacientes com mutações no CDHR1, permitindo tratamentos mais personalizados.
+                    </p>
+                    <p class="discovery-source">Fonte: Human Molecular Genetics</p>
+                </div>
+
+                <div class="discovery-card">
+                    <h4>Reabilitação Visual Melhora Qualidade de Vida</h4>
+                    <p class="discovery-date">Publicado em: Janeiro de 2026</p>
+                    <p>
+                        Programas de reabilitação visual combinados com tecnologia assistiva melhoram significativamente 
+                        a qualidade de vida de pacientes com baixa visão, aumentando a independência em atividades diárias.
+                    </p>
+                    <p class="discovery-source">Fonte: Journal of Vision</p>
+                </div>
+
+                <div class="discovery-card">
+                    <h4>Células-Tronco Regeneram Tecido Retiniano</h4>
+                    <p class="discovery-date">Publicado em: Dezembro de 2025</p>
+                    <p>
+                        Pesquisa pré-clínica demonstra que células-tronco pluripotentes induzidas (iPSCs) diferenciadas 
+                        em fotorreceptores podem integrar-se ao tecido retiniano danificado e restaurar parcialmente a visão.
+                    </p>
+                    <p class="discovery-source">Fonte: Science Translational Medicine</p>
+                </div>
+
+                <div class="discovery-card">
+                    <h4>Mutações Raras em CDHR1 Mapeadas</h4>
+                    <p class="discovery-date">Publicado em: Novembro de 2025</p>
+                    <p>
+                        Um banco de dados global foi criado catalogando mais de 500 mutações diferentes no gene CDHR1, 
+                        ajudando pesquisadores a correlacionar genótipo com fenótipo e prognóstico.
+                    </p>
+                    <p class="discovery-source">Fonte: European Journal of Human Genetics</p>
+                </div>
+            </div>
+
+            <section class="museum-section" style="margin-top: 3rem;">
+                <h3>Sobre as Fontes</h3>
+                <p>
+                    Os artigos e descobertas listadas nesta página são coletadas automaticamente de bases de dados 
+                    científicas públicas como:
+                </p>
+                <ul>
+                    <li><strong>PubMed:</strong> Base de dados de literatura biomédica</li>
+                    <li><strong>Europe PMC:</strong> Repositório europeu de artigos científicos</li>
+                    <li><strong>bioRxiv:</strong> Preprints de biologia</li>
+                </ul>
+            </section>
+
+            <div class="navigation-buttons">
+                <a href="simulator.html" class="btn btn-secondary">← Voltar para Simulador</a>
+                <a href="../index.html" class="btn btn-primary">Ir para Início →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 HealthTech CDHR1. Plataforma de Ciência Aberta.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

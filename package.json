@@ -1,0 +1,23 @@
+{
+  "name": "health-farpa-ai",
+  "version": "0.1.0",
+  "description": "HealthTech CDHR1 - Plataforma de Ciência Aberta em Distrofias Retinianas",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "wrangler pages deploy ."
+  },
+  "keywords": [
+    "health",
+    "cdhr1",
+    "retinal-dystrophy",
+    "accessibility",
+    "wcag"
+  ],
+  "author": "HealthTech Team",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

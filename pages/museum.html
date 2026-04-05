@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museu Educacional - HealthTech CDHR1</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>HealthTech CDHR1</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="museum.html" class="active">Museu Educacional</a></li>
+                <li><a href="simulator.html">Simulador</a></li>
+                <li><a href="discoveries.html">Descobertas</a></li>
+            </ul>
+            <button class="contrast-toggle" id="contrastToggle" aria-label="Alternar Alto Contraste">
+                🌓 Alto Contraste
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="content-page">
+        <div class="container">
+            <h2>🏛️ Museu Educacional</h2>
+            <p class="subtitle">Compreenda o gene CDHR1 e as distrofias retinianas</p>
+
+            <section class="museum-section">
+                <h3>O que é CDHR1?</h3>
+                <p>
+                    O gene CDHR1 (Cadherin Related 1) codifica uma proteína crucial para a manutenção da estrutura e função da retina. 
+                    Mutações neste gene podem levar a distrofias retinianas hereditárias, afetando principalmente os cones e bastonetes 
+                    responsáveis pela visão.
+                </p>
+            </section>
+
+            <section class="museum-section">
+                <h3>Progressão da Doença</h3>
+                <p>
+                    A atrofia retiniana externa (ERC) segue um modelo exponencial de degradação. A fórmula matemática que descreve 
+                    esse processo é:
+                </p>
+                <div class="formula-box">
+                    <code>ERC(t) = ERC₀ · e^(-r_G · t)</code>
+                </div>
+                <p>
+                    Onde:
+                </p>
+                <ul>
+                    <li><strong>ERC(t)</strong> = Espessura da retina no tempo t</li>
+                    <li><strong>ERC₀</strong> = Espessura inicial da retina</li>
+                    <li><strong>r_G</strong> = Taxa de degradação por ano</li>
+                    <li><strong>t</strong> = Tempo em anos</li>
+                </ul>
+            </section>
+
+            <section class="museum-section">
+                <h3>Sintomas e Manifestações</h3>
+                <div class="symptom-grid">
+                    <div class="symptom-card">
+                        <h4>Fase Inicial</h4>
+                        <p>Dificuldade em visão noturna, fotopsia (flashes de luz)</p>
+                    </div>
+                    <div class="symptom-card">
+                        <h4>Fase Intermediária</h4>
+                        <p>Redução do campo visual, dificuldade em atividades diárias</p>
+                    </div>
+                    <div class="symptom-card">
+                        <h4>Fase Avançada</h4>
+                        <p>Perda significativa de visão, possível cegueira legal</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="museum-section">
+                <h3>Pesquisa Atual</h3>
+                <p>
+                    A comunidade científica está investigando várias abordagens terapêuticas, incluindo:
+                </p>
+                <ul>
+                    <li>Terapia gênica para restaurar a função do gene CDHR1</li>
+                    <li>Suplementação com antioxidantes para retardar a progressão</li>
+                    <li>Uso de células-tronco para regeneração retiniana</li>
+                    <li>Dispositivos de amplificação visual e reabilitação</li>
+                </ul>
+            </section>
+
+            <div class="navigation-buttons">
+                <a href="simulator.html" class="btn btn-primary">Ir para Simulador →</a>
+                <a href="discoveries.html" class="btn btn-secondary">Ver Descobertas →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 HealthTech CDHR1. Plataforma de Ciência Aberta.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

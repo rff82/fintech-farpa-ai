@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Visão - HealthTech CDHR1</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .simulator-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        body.high-contrast .simulator-container {
+            background-color: var(--hc-bg);
+            border: 4px solid var(--hc-border);
+        }
+
+        .slider-group {
+            margin: 2rem 0;
+        }
+
+        .slider-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: none;
+        }
+
+        body.high-contrast input[type="range"]::-webkit-slider-thumb {
+            background: var(--hc-text);
+        }
+
+        body.high-contrast input[type="range"]::-moz-range-thumb {
+            background: var(--hc-text);
+        }
+
+        .year-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        body.high-contrast .year-display {
+            color: var(--hc-text);
+        }
+
+        .vision-preview {
+            width: 100%;
+            height: 300px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            margin: 2rem 0;
+            background: radial-gradient(circle, rgba(200,200,200,0.5) 0%, rgba(50,50,50,0.9) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        body.high-contrast .vision-preview {
+            background: radial-gradient(circle, rgba(255,255,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
+            border: 4px solid var(--hc-border);
+            color: var(--hc-text);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        body.high-contrast .stat-card {
+            background-color: var(--hc-bg);
+            border: 2px solid var(--hc-border);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        body.high-contrast .stat-value {
+            color: var(--hc-text);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        body.high-contrast .stat-label {
+            color: var(--hc-text);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>HealthTech CDHR1</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="museum.html">Museu Educacional</a></li>
+                <li><a href="simulator.html" class="active">Simulador</a></li>
+                <li><a href="discoveries.html">Descobertas</a></li>
+            </ul>
+            <button class="contrast-toggle" id="contrastToggle" aria-label="Alternar Alto Contraste">
+                🌓 Alto Contraste
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="content-page">
+        <div class="container">
+            <h2>🔬 Simulador de Visão</h2>
+            <p class="subtitle">Visualize a progressão da distrofia retiniana ao longo do tempo</p>
+
+            <div class="simulator-container">
+                <div class="slider-group">
+                    <label for="yearSlider">Progresso temporal (Anos): <span id="yearValue">0</span></label>
+                    <input type="range" id="yearSlider" min="0" max="20" value="0" step="1" aria-label="Deslize para ajustar os anos de progressão">
+                    <div class="year-display" id="yearDisplay">Ano 0</div>
+                </div>
+
+                <div class="vision-preview" id="visionPreview" role="img" aria-label="Visualização da progressão da visão">
+                    <span id="previewText">Visão Normal</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Espessura Retiniana (ERC)</div>
+                        <div class="stat-value" id="ercValue">100%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Taxa de Degradação</div>
+                        <div class="stat-value" id="degradationValue">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Campo Visual Restante</div>
+                        <div class="stat-value" id="fieldValue">100%</div>
+                    </div>
+                </div>
+
+                <div aria-live="polite" aria-atomic="true" id="simulatorStatus" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;"></div>
+            </div>
+
+            <section class="museum-section">
+                <h3>Como Funciona o Simulador</h3>
+                <p>
+                    Este simulador utiliza o modelo matemático de degradação exponencial para mostrar como a espessura da retina 
+                    diminui ao longo do tempo. A visualização muda para representar a progressão do escotoma (perda de campo visual).
+                </p>
+                <ul>
+                    <li><strong>Ano 0-5:</strong> Visão praticamente normal, com início de sintomas noturnos</li>
+                    <li><strong>Ano 5-10:</strong> Redução gradual do campo visual periférico</li>
+                    <li><strong>Ano 10-15:</strong> Perda significativa de visão periférica</li>
+                    <li><strong>Ano 15-20:</strong> Possível visão tubular ou cegueira legal</li>
+                </ul>
+            </section>
+
+            <div class="navigation-buttons">
+                <a href="museum.html" class="btn btn-secondary">← Voltar para Museu</a>
+                <a href="discoveries.html" class="btn btn-primary">Ver Descobertas →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 HealthTech CDHR1. Plataforma de Ciência Aberta.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Simulator Logic
+        const yearSlider = document.getElementById('yearSlider');
+        const yearValue = document.getElementById('yearValue');
+        const yearDisplay = document.getElementById('yearDisplay');
+        const visionPreview = document.getElementById('visionPreview');
+        const previewText = document.getElementById('previewText');
+        const ercValue = document.getElementById('ercValue');
+        const degradationValue = document.getElementById('degradationValue');
+        const fieldValue = document.getElementById('fieldValue');
+        const simulatorStatus = document.getElementById('simulatorStatus');
+
+        const ERC_BASELINE = 1.0;
+        const DECAY_RATE = 0.035;
+
+        function updateSimulation() {
+            const year = parseInt(yearSlider.value);
+            yearValue.textContent = year;
+            yearDisplay.textContent = `Ano ${year}`;
+
+            // Calculate ERC degradation
+            const ercCurrent = ERC_BASELINE * Math.exp(-DECAY_RATE * year);
+            const ercPercent = Math.round(ercCurrent * 100);
+            const degradation = Math.round((1 - ercCurrent) * 100);
+            const fieldRemaining = Math.max(0, Math.round((1 - degradation / 100) * 100));
+
+            ercValue.textContent = `${ercPercent}%`;
+            degradationValue.textContent = `${degradation}%`;
+            fieldValue.textContent = `${fieldRemaining}%`;
+
+            // Update vision preview
+            updateVisionPreview(year, degradation);
+
+            // Announce to screen readers
+            simulatorStatus.textContent = `Ano ${year}: Espessura retiniana ${ercPercent}%, Degradação ${degradation}%, Campo visual ${fieldRemaining}%`;
+        }
+
+        function updateVisionPreview(year, degradation) {
+            const stages = [
+                { year: 0, text: 'Visão Normal', opacity: 0 },
+                { year: 5, text: 'Sintomas Noturnos', opacity: 0.2 },
+                { year: 10, text: 'Redução Periférica', opacity: 0.5 },
+                { year: 15, text: 'Perda Significativa', opacity: 0.8 },
+                { year: 20, text: 'Visão Tubular', opacity: 0.95 }
+            ];
+
+            let currentStage = stages[0];
+            for (let stage of stages) {
+                if (year >= stage.year) {
+                    currentStage = stage;
+                }
+            }
+
+            previewText.textContent = currentStage.text;
+            const opacity = Math.min(currentStage.opacity + (degradation / 100) * 0.2, 1);
+            visionPreview.style.opacity = 1 - opacity * 0.7;
+        }
+
+        yearSlider.addEventListener('input', updateSimulation);
+        updateSimulation();
+    </script>
+</body>
+</html>
