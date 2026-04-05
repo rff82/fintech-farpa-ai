@@ -9,7 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "preview": "npx wrangler pages dev out",
-    "deploy": "npx wrangler pages deploy out --project-name=health-web-5cd"
+    "deploy": "npx wrangler pages deploy out --project-name=health-web"
   },
   "dependencies": {
     "@health/shared": "*",
