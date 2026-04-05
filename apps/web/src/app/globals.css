@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -71,4 +73,155 @@ body {
   outline: var(--ring-width) solid var(--color-primary);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LANDING PAGE — Phosphene Field
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Header adapts to dark landing ────────────────────────────────────────── */
+body[data-landing="dark"] header[role="banner"] {
+  background: rgba(7, 11, 20, 0.85) !important;
+  border-bottom-color: rgba(30, 45, 74, 0.6) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+body[data-landing="dark"] header[role="banner"] a,
+body[data-landing="dark"] header[role="banner"] nav a {
+  color: #C0CBDF !important;
+}
+body[data-landing="dark"] header[role="banner"] a:hover,
+body[data-landing="dark"] header[role="banner"] nav a:hover {
+  color: #E8EDFF !important;
+}
+body[data-landing="dark"] header[role="banner"] button {
+  border-color: rgba(34, 211, 238, 0.3) !important;
+  color: #C0CBDF !important;
+  background: rgba(13, 21, 37, 0.7) !important;
+}
+body[data-landing="dark"] footer[role="contentinfo"] {
+  background: #070B14 !important;
+  border-top-color: #141E30 !important;
+  color: #4A5C78 !important;
+}
+body[data-landing="dark"] footer[role="contentinfo"] a {
+  color: #5A7A9A !important;
+}
+
+/* ── Phosphene animation ─────────────────────────────────────────────────── */
+@keyframes lp-phosphene-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(18px, -14px) scale(1.06); }
+  50%  { transform: translate(6px, 22px) scale(0.96); }
+  75%  { transform: translate(-16px, 8px) scale(1.03); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.lp-phosphene {
+  animation-name: lp-phosphene-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+/* ── Formula glow ────────────────────────────────────────────────────────── */
+@keyframes lp-formula-glow {
+  0%, 100% { text-shadow: 0 0 18px rgba(245, 158, 11, 0.25); }
+  50%       { text-shadow: 0 0 36px rgba(245, 158, 11, 0.55), 0 0 70px rgba(245, 158, 11, 0.15); }
+}
+.lp-formula-glow {
+  animation: lp-formula-glow 4s ease-in-out infinite;
+}
+
+/* ── Scroll dot animation ────────────────────────────────────────────────── */
+@keyframes lp-scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%       { transform: translateY(8px); opacity: 0.2; }
+}
+.lp-scroll-dot {
+  width: 4px;
+  height: 14px;
+  background: #8B9CC8;
+  border-radius: 2px;
+  animation: lp-scroll-bounce 2s ease-in-out infinite;
+}
+
+/* ── Interactive button states ───────────────────────────────────────────── */
+.lp-btn-amber {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.lp-btn-amber:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+  filter: brightness(1.05);
+}
+.lp-btn-amber:active {
+  transform: translateY(0);
+}
+.lp-btn-amber:focus-visible {
+  outline: 3px solid #F59E0B !important;
+  outline-offset: 3px;
+}
+
+.lp-btn-ghost {
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.lp-btn-ghost:hover {
+  background: rgba(34, 211, 238, 0.07);
+  border-color: rgba(34, 211, 238, 0.65) !important;
+}
+.lp-btn-ghost:focus-visible {
+  outline: 3px solid #22D3EE !important;
+  outline-offset: 3px;
+}
+
+.lp-btn-ghost-cyan {
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.lp-btn-ghost-cyan:hover {
+  background: rgba(34, 211, 238, 0.08);
+  border-color: rgba(34, 211, 238, 0.6) !important;
+}
+.lp-btn-ghost-cyan:focus-visible {
+  outline: 3px solid #22D3EE !important;
+  outline-offset: 3px;
+}
+
+/* ── Responsive grids ────────────────────────────────────────────────────── */
+.lp-formula-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.lp-zones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 720px) {
+  .lp-formula-grid,
+  .lp-zones-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* ── Reduce motion ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .lp-phosphene,
+  .lp-formula-glow,
+  .lp-scroll-dot {
+    animation: none !important;
+  }
+  .lp-btn-amber:hover,
+  .lp-btn-ghost:hover,
+  .lp-btn-ghost-cyan:hover {
+    transform: none !important;
+  }
 }
