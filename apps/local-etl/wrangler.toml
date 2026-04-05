@@ -9,6 +9,6 @@ binding = "DB"
 database_name = "health-db"
 database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
 
-# [[r2_buckets]]
-# binding = "ASSETS"
-# bucket_name = "health-assets"   # enable R2 in Cloudflare Dashboard first
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "health-assets"
