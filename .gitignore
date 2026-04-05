@@ -9,8 +9,10 @@ node_modules/
 # build outputs
 dist/
 build/
+out/
 .next/
 .turbo/
+*.tsbuildinfo
 
 # cloudflare
 .wrangler/
