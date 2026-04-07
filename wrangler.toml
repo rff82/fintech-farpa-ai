@@ -3,22 +3,22 @@ compatibility_date = "2026-04-05"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
 
-[[d1_databases]]
-binding = "DB"
-database_name = "fintech-db"
-database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "fintech-db"
+# database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
 
-[[r2_buckets]]
-binding = "STORAGE"
-bucket_name = "fintech-assets"
+# [[r2_buckets]]
+# binding = "STORAGE"
+# bucket_name = "fintech-assets"
 
-[[kv_namespaces]]
-binding = "KV"
-id = "7cf91161a0a14cfeb1b9f372221bce5b"
+# [[kv_namespaces]]
+# binding = "KV"
+# id = "7cf91161a0a14cfeb1b9f372221bce5b"
 
-[ai]
-binding = "AI"
+# [ai]
+# binding = "AI"
 
-[[vectorize]]
-binding = "VECTOR_INDEX"
-index_name = "fintech-index"
+# [[vectorize]]
+# binding = "VECTOR_INDEX"
+# index_name = "fintech-index"
