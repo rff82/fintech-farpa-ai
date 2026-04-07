@@ -23,7 +23,7 @@ export default function Header() {
     <nav className="navbar" role="navigation" aria-label={t('nav.home')}>
       <div className="container">
         <div className="logo">
-          <h1>HealthTech CDHR1</h1>
+          <h1>FinTech Farpa AI</h1>
         </div>
 
         <ul className="nav-links">

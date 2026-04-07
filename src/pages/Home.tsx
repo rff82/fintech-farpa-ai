@@ -5,11 +5,11 @@ export default function Home() {
     <section className="hero">
       <div className="container">
         <div className="hero-content">
-          <h2>Ciência Aberta em Distrofias Retinianas</h2>
+          <h2>Inteligência de Mercado em Fintech</h2>
           <p>
-            Plataforma de pesquisa especializada em genética oftalmológica, com foco
-            em CDHR1 e distrofias retinianas hereditárias. Dados de PubMed, Europe
-            PMC, ClinicalTrials.gov e OMIM em uma interface unificada.
+            Plataforma de análise financeira especializada em tendências de mercado,
+            com foco em ativos digitais e inovação bancária. Dados de bolsas,
+            relatórios setoriais e indicadores macroeconômicos em uma interface unificada.
           </p>
 
           <div className="cta-buttons">
@@ -17,7 +17,7 @@ export default function Home() {
               Busca Avançada
             </Link>
             <Link to="/museum" className="btn btn-secondary">
-              Museu Educacional
+              Museu Financeiro
             </Link>
           </div>
 
@@ -27,44 +27,43 @@ export default function Home() {
               <div className="feature-card">
                 <h4>🔍 Busca Avançada</h4>
                 <p>
-                  Pesquise artigos científicos com filtros por gene, fenótipo,
-                  tipo de estudo, ano de publicação e periódico. Dados do PubMed
-                  em tempo real.
+                  Pesquise relatórios financeiros com filtros por setor, ativo,
+                  tipo de análise, ano e instituição. Dados de mercado em tempo real.
                 </p>
               </div>
               <div className="feature-card">
-                <h4>🧬 Banco de Genes</h4>
+                <h4>📈 Banco de Ativos</h4>
                 <p>
-                  Catálogo de genes oftalmológicos com foco no CDHR1. Localização
-                  cromossômica, mutações conhecidas e fenótipos associados.
+                  Catálogo de ativos financeiros com foco em inovação. Performance
+                  histórica, volatilidade e correlações de mercado.
                 </p>
               </div>
               <div className="feature-card">
-                <h4>🏥 Ensaios Clínicos</h4>
+                <h4>🚀 Tendências</h4>
                 <p>
-                  Ensaios clínicos ativos em distrofias retinianas, integrados
-                  com ClinicalTrials.gov com filtros por fase, status e gene.
+                  Movimentações ativas no setor de fintech, integradas com as
+                  principais fontes de dados financeiros globais.
                 </p>
               </div>
               <div className="feature-card">
                 <h4>📊 Analytics</h4>
                 <p>
-                  Tendências de publicações ao longo do tempo, genes mais
-                  estudados e rede de colaborações internacionais.
+                  Tendências de investimentos ao longo do tempo, setores mais
+                  promissores e rede de fluxos de capital internacionais.
                 </p>
               </div>
               <div className="feature-card">
-                <h4>🏛️ Museu Educacional</h4>
+                <h4>🏛️ Museu Financeiro</h4>
                 <p>
-                  Aprenda sobre o gene CDHR1 e como as distrofias retinianas
-                  afetam a visão ao longo do tempo com modelo matemático.
+                  Aprenda sobre a evolução das fintechs e como as novas tecnologias
+                  estão transformando o sistema financeiro global.
                 </p>
               </div>
               <div className="feature-card">
-                <h4>🔬 Simulador de Visão</h4>
+                <h4>📉 Simulador de Mercado</h4>
                 <p>
-                  Visualize como a progressão da doença afeta a percepção
-                  visual usando o modelo exponencial de degradação retiniana.
+                  Visualize como a volatilidade e eventos macroeconômicos afetam
+                  seu portfólio usando modelos matemáticos de risco.
                 </p>
               </div>
             </div>

@@ -1,16 +1,16 @@
-name = "health-farpa-ai"
+name = "fintech-farpa-ai"
 compatibility_date = "2026-04-05"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "health-db"
+database_name = "fintech-db"
 database_id = "b4077484-24e1-4874-ad06-0b82915e7208"
 
 [[r2_buckets]]
 binding = "STORAGE"
-bucket_name = "health-assets"
+bucket_name = "fintech-assets"
 
 [[kv_namespaces]]
 binding = "KV"
@@ -21,4 +21,4 @@ binding = "AI"
 
 [[vectorize]]
 binding = "VECTOR_INDEX"
-index_name = "health-index"
+index_name = "fintech-index"

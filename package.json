@@ -1,7 +1,7 @@
 {
-  "name": "health-farpa-ai",
+  "name": "fintech-farpa-ai",
   "version": "0.2.0",
-  "description": "HealthTech CDHR1 - Plataforma de Pesquisa em Distrofias Retinianas",
+  "description": "FinTech Farpa AI - Plataforma de Inteligência Financeira",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -31,12 +31,12 @@
     "wrangler": "^3.112.0"
   },
   "keywords": [
-    "health",
-    "cdhr1",
-    "retinal-dystrophy",
+    "fintech",
+    "farpa-ai",
+    "finance",
     "accessibility",
     "wcag"
   ],
-  "author": "HealthTech Team",
+  "author": "Farpa AI Team",
   "license": "MIT"
 }
